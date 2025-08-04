@@ -89,12 +89,12 @@ textarea {
 }
 
 .btn-primary {
-    background: #3498db;
+    background: #0d6efd;
     color: white;
 }
 
 .btn-primary:hover {
-    background: #2980b9;
+    background: #0b5ed7;
     transform: translateY(-2px);
 }
 
@@ -205,4 +205,9 @@ textarea {
 
 .mt-3 {
     margin-top: 1rem;
+}
+
+/* smooth fading to flashed mesages */
+.alert {
+  transition: opacity 0.5s ease-in-out;
 }

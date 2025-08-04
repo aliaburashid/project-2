@@ -47,6 +47,10 @@ exports.createAuthor = async (req, res, next) => {
         req.author = author
         next()
     } catch (error) {
+        if (error.code === 11000 && error.keyPattern.email) {
+            res.locals.data = { error: 'Email already exists. Please use a different one.' };
+            return res.render('auth/SignUp', { error: res.locals.data.error });
+        }
         res.status(400).json({ message: error.message })
     }
 }
@@ -54,20 +58,43 @@ exports.createAuthor = async (req, res, next) => {
 // Log In Existing Author
 exports.loginAuthor = async (req, res, next) => {
     try {
-        // Finding the author by email
-        const author = await Author.findOne({ email: req.body.email })
-        // Comparing their password with the hashed password in the DB
-        if (!author || !await bcrypt.compare(req.body.password, author.password)) {
-            res.status(400).send('Invalid login credentials')
-        } else {
-            // If matched, it creates a new token
-            const token = await author.generateAuthToken()
-            // Sets that token and user in req and res.locals so the view/API can use it
-            res.locals.data.token = token
-            req.author = author
-            next()
+        // Destructure email and password from request body
+        const { email, password } = req.body;
+
+        // Find author in database using provided email
+        const author = await Author.findOne({ email });
+
+        // If author not found, re-render SignIn page with error message
+        if (!author) {
+            return res.status(400).render('auth/SignIn', {
+                error: 'Invalid login credentials'
+            });
         }
+
+        // Compare provided password with hashed password in database
+        const isMatch = await bcrypt.compare(password, author.password);
+
+        // If password doesn't match, re-render SignIn page with error message
+        if (!isMatch) {
+            return res.status(400).render('auth/SignIn', {
+                error: 'Invalid login credentials'
+            });
+        }
+
+        // If login is successful, generate a JWT token
+        const token = await author.generateAuthToken();
+
+        // Store token and author on request/response locals for later middleware use
+        res.locals.data.token = token;
+        req.author = author;
+
+        // Pass control to the next middleware (e.g. set cookie, redirect, etc.)
+        next();
+
     } catch (error) {
-        res.status(400).json({ message: error.message })
+        // If something goes wrong, render SignIn page with a generic server error
+        res.status(500).render('auth/SignIn', {
+            error: 'Server error. Please try again.'
+        });
     }
-}
+};
