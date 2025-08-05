@@ -5,21 +5,21 @@ const jwt = require('jsonwebtoken')
 // Middleware to protect routes (API version)
 exports.auth = async (req, res, next) => {
   try {
-     // 1. Get the token from the Authorization header
-    const token = req.header('Authorization').replace('Bearer ', '')
-    // 2. Verify the token using your secret key
+    const token =
+      req.header('Authorization')?.replace('Bearer ', '') ||
+      req.query.token
+
+    if (!token) throw new Error('No token provided')
+
     const data = jwt.verify(token, 'secret')
-    // 3. Find the author by ID from token payload
     const author = await Author.findOne({ _id: data._id })
-     // 4. If no user found, throw error
-    if (!author) {
-      throw new Error()
-    }
-    // 5. Attach author to the request for use in next functions
-    req.author = author
+
+    if (!author) throw new Error('Author not found')
+
+    req.user = author
     next()
   } catch (error) {
-    res.status(401).send('Not authorized')
+    res.status(401).json({ message: 'Not authorized', error: error.message })
   }
 }
 
