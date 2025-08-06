@@ -21,7 +21,7 @@ function Layout(props) {
         <header style={{ borderBottom: '1px solid #dbdbdb', background: 'white' }}>
           <div className="app-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 0' }}>
             {/* Logo - goes to home/feed page */}
-            <a href={token ? `/posts?token=${token}` : '/'} style={{ textDecoration: 'none', fontSize: '1.8rem', fontWeight: '700', color: '#262626', fontFamily: "'Dancing Script', cursive" }}>
+            <a href={token ? `/posts?token=${token}` : '/'} style={{ textDecoration: 'none', fontSize: '2.2rem', fontWeight: '700', color: '#262626', fontFamily: "'Dancing Script', cursive" }}>
               FlickGallery
             </a>
 

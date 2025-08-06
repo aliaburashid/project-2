@@ -5,7 +5,7 @@ function NewPost(props) {
   const token = props.token
 
   return (
-    <Layout>
+    <Layout token={token}>
       <div className="new-post-container">
   <form
     action={`/posts?token=${token}`}
