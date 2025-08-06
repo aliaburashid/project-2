@@ -612,7 +612,7 @@ body {
 .single-post-container {
   display: flex;
   justify-content: center;
-  padding: 2rem 1rem;
+  margin-top: 2rem;
 }
 
 .single-post-box {
@@ -621,13 +621,13 @@ body {
   width: 100%;
   border: 1px solid #ddd;
   border-radius: 4px;
-  overflow: hidden;
   background: white;
+  overflow: hidden;
 }
 
 .single-post-image {
   flex: 1;
-  background-color: #000;
+  background: #000;
 }
 
 .single-post-image img {
@@ -641,18 +641,18 @@ body {
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .post-header {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 1rem;
+  gap: 0.4rem; 
 }
 
 .author-avatar {
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
 }
 
@@ -669,9 +669,10 @@ body {
   margin: 0.5rem 0;
 }
 
-.post-likes {
-  font-weight: 500;
-  margin-top: 0.5rem;
+.comment-form {
+  display: flex;
+  gap: 0.1rem;
+  margin-top: 1rem;
 }
 
 .comment-form input {
@@ -681,24 +682,127 @@ body {
   border: 1px solid #ccc;
 }
 
-.comments-toggle.hidden {
-  display: none;
-}
-
-.comment-form {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.post-timestamp {
-  font-size: 0.8rem;
-  color: #888;
-  margin-top: 10px;
-}
-
 .post-footer-actions {
   display: flex;
   justify-content: space-between;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* Post header with profile image, caption, and timestamp stacked neatly */
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Profile image next to caption */
+.post-header .author-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.75rem; /* Push caption block closer */
+}
+
+/* Block holding caption and timestamp */
+.caption-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.caption-block .post-caption-line {
+  font-size: 1rem;
+  color: #262626;
+}
+
+.caption-block .post-timestamp {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.caption-only {
+  display: inline-block;
+  margin-right: 200px;
+  color: #333; /* optional styling */
+}
+
+/* New Post Page */
+.new-post-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 5rem;
+  min-height: 80vh;
+}
+
+.new-post-form {
+  background: white;
+  border: 1px solid #dbdbdb;
+  padding: 3rem 2.5rem;        
+  border-radius: 12px;          
+  width: 100%;
+  max-width: 700px;           
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 100px;
+  gap: 1.2rem;
+}
+
+
+.new-post-title {
+  text-align: center;
+  color: #262626;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.file-upload-label input[type="file"] {
+  border: 1px solid #dbdbdb;
+  padding: 0.7rem;
+  border-radius: 6px;
+  width: 100%;
+  font-size: 0.95rem;
+  background-color: #fafafa;
+}
+
+.new-post-input {
+  border: 1px solid #dbdbdb;
+  border-radius: 6px;
+  padding: 0.7rem 1rem;
+  font-size: 0.95rem;
+  background-color: #fafafa;
+}
+
+.new-post-input:focus {
+  outline: none;
+  border-color: #0095f6;
+  background-color: #fff;
+}
+
+.new-post-form button {
+  padding: 0.8rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  border: none;
+  background-color: #0095f6;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.new-post-form button:hover {
+  background-color: #007dc1;
+}
+
+.new-post-input {
+  padding: 1rem 1.2rem;
+  font-size: 1rem;
+}
+
+.file-upload-label input[type="file"] {
+  padding: 1rem;
+  font-size: 1rem;
 }

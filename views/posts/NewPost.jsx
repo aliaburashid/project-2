@@ -6,46 +6,37 @@ function NewPost(props) {
 
   return (
     <Layout>
-      <div className="auth-container">
-        <div className="auth-card">
-          <h1>New Post</h1>
-          <form 
-            className="auth-form" 
-            action={`/posts?token=${token}`} 
-            method="POST" 
-            encType="multipart/form-data"
-          >
-            {/* Image upload field */}
-            <input 
-              type="file" 
-              name="image" 
-              accept="image/*" 
-              className="auth-input" 
-              required 
-            />
+      <div className="new-post-container">
+  <form
+    action={`/posts?token=${token}`}
+    method="POST"
+    encType="multipart/form-data"
+    className="new-post-form"
+  >
+    <h2 className="new-post-title">Create New Post</h2>
 
-            {/* Caption input */}
-            <input 
-              type="text" 
-              name="caption" 
-              placeholder="Write a caption..." 
-              className="auth-input" 
-              maxLength="2200" 
-            />
+    <label className="file-upload-label">
+      <input type="file" name="image" required />
+    </label>
 
-            {/* Location input (optional) */}
-            <input 
-              type="text" 
-              name="location" 
-              placeholder="Location (optional)" 
-              className="auth-input" 
-            />
+    <input
+      type="text"
+      name="caption"
+      placeholder="Write a caption..."
+      className="new-post-input"
+    />
 
-            {/* Submit button */}
-            <button type="submit" className="auth-button">Post</button>
-          </form>
-        </div>
-      </div>
+    <input
+      type="text"
+      name="location"
+      placeholder="Location (optional)"
+      className="new-post-input"
+    />
+
+    <button type="submit" className="btn btn-primary">Post</button>
+  </form>
+</div>
+
     </Layout>
   )
 }
