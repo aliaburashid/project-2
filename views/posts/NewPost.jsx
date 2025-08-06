@@ -7,36 +7,60 @@ function NewPost(props) {
   return (
     <Layout token={token}>
       <div className="new-post-container">
-  <form
-    action={`/posts?token=${token}`}
-    method="POST"
-    encType="multipart/form-data"
-    className="new-post-form"
-  >
-    <h2 className="new-post-title">Create New Post</h2>
+        <div className="new-post-card">
+          <div className="new-post-header">
+            <h2 className="new-post-title">Create New Post</h2>
+          </div>
+          
+          <form
+            action={`/posts?token=${token}`}
+            method="POST"
+            encType="multipart/form-data"
+            className="new-post-form"
+          >
+            {/* File Upload Section */}
+            <div className="file-upload-section">
+              <label className="file-upload-label">
+                <div className="upload-area">
+                  <i className="fas fa-camera"></i>
+                  <span className="upload-text">Click to upload photo</span>
+                  <span className="upload-hint">or drag and drop</span>
+                </div>
+                <input type="file" name="image" required accept="image/*" />
+              </label>
+            </div>
 
-    <label className="file-upload-label">
-      <input type="file" name="image" required />
-    </label>
+            {/* Form Fields */}
+            <div className="form-fields">
+              <div className="form-group">
+                <textarea
+                  name="caption"
+                  placeholder="Write a caption..."
+                  className="new-post-caption"
+                  rows="4"
+                />
+              </div>
 
-    <input
-      type="text"
-      name="caption"
-      placeholder="Write a caption..."
-      className="new-post-input"
-    />
+              <div className="form-group">
+                <input
+                  type="text"
+                  name="location"
+                  placeholder="📍 Add location"
+                  className="new-post-location"
+                />
+              </div>
+            </div>
 
-    <input
-      type="text"
-      name="location"
-      placeholder="Location (optional)"
-      className="new-post-input"
-    />
-
-    <button type="submit" className="btn btn-primary">Post</button>
-  </form>
-</div>
-
+            {/* Submit Button */}
+            <div className="submit-section">
+              <button type="submit" className="new-post-submit">
+                <i className="fas fa-paper-plane"></i>
+                Share
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </Layout>
   )
 }

@@ -31,5 +31,7 @@ router.get('/edit', dataController.auth, dataController.editProfileView);
 // Profile Page
 router.get('/profile', dataController.auth, dataController.showProfile, viewController.showProfile)
 
+// Logout route
+router.post('/logout', dataController.logout, viewController.redirectToLogin)
 
 module.exports = router

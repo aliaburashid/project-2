@@ -151,3 +151,18 @@ exports.updateProfile = async (req, res, next) => {
     res.status(400).send({ message: error.message });
   }
 };
+
+// Logout function
+exports.logout = async (req, res, next) => {
+  try {
+    // Clear the token from the response locals
+    res.locals.data.token = null;
+    // Also clear any token from request if it exists
+    if (req.author) {
+      req.author = null;
+    }
+    next();
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};

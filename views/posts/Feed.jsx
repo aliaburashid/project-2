@@ -47,7 +47,7 @@ function Feed(props) {
                             </div>
 
                             {/* Likes Count */}
-                            <div className="post-likes" style={{ padding: '0 16px', marginBottom: '0.5rem' }}>
+                            <div className="post-likes">
                                 <span className="likes-count">{post.likeCount} likes</span>
                             </div>
 
@@ -58,26 +58,49 @@ function Feed(props) {
                             </div>
 
                             {/* Timestamp */}
-                            <div className="post-timestamp" style={{ padding: '0 16px', fontSize: '0.8rem', color: '#999' }}>
+                            <div className="post-timestamp">
                                 {new Date(post.createdAt).toLocaleDateString()}
                             </div>
 
                             {/* Comments Section */}
                             <div className="comments-section">
                                 {post.comments.length > 0 ? (
-                                    post.comments.map((comment) => (
-                                        <div key={comment._id} className="post-caption">
-                                            <span className="caption-author">{comment.author.name}</span>{' '}
-                                            <span className="caption-text">{comment.content}</span>
-                                        </div>
-                                    ))
+                                    <>
+                                        {/* Show first 2 comments */}
+                                        {post.comments.slice(0, 2).map((comment) => (
+                                            <div key={comment._id} className="post-caption">
+                                                <span className="caption-author">{comment.author.name}</span>{' '}
+                                                <span className="caption-text">{comment.content}</span>
+                                            </div>
+                                        ))}
+                                        
+                                        {/* Show "View more comments" if there are more than 2 comments */}
+                                        {post.comments.length > 2 && (
+                                            <div className="view-more-comments" style={{ display: 'none' }}>
+                                                {post.comments.slice(2).map((comment) => (
+                                                    <div key={comment._id} className="post-caption">
+                                                        <span className="caption-author">{comment.author.name}</span>{' '}
+                                                        <span className="caption-text">{comment.content}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
+                                        
+                                        {/* View more button */}
+                                        {post.comments.length > 2 && (
+                                            <button 
+                                                className="view-more-btn" 
+                                                onClick="toggleFeedComments(this)"
+                                                data-post-id={post._id}
+                                            >
+                                                View all {post.comments.length} comments
+                                            </button>
+                                        )}
+                                    </>
                                 ) : (
-                                    <p style={{ paddingLeft: '16px', color: '#888', fontSize: '0.9rem' }}>
-                                        No comments yet
-                                    </p>
+                                    <p className="no-comments">No comments yet</p>
                                 )}
                             </div>
-
 
                             {/* Comment Form */}
                             <form
@@ -91,7 +114,7 @@ function Feed(props) {
                                     placeholder="Add a comment..."
                                     required
                                 />
-                                <button type="submit" className="btn btn-primary">Post</button>
+                                <button type="submit">Post</button>
                             </form>
                         </div>
                     ))}

@@ -14,70 +14,76 @@ function ShowPost({ post, token }) {
                     {/* Right - Content */}
                     <div className="single-post-content">
                         {/* Header */}
-                        {/* Header with profile and caption on the same line */}
-                        {/* Profile picture, name + caption + timestamp aligned cleanly */}
-                        <div
-                            className="post-header"
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                marginBottom: '1rem',
-                            }}
-                        >
-                            <img
-                                src={post.author.profilePicture || '/images/default-avatar.png'}
-                                alt={post.author.name}
-                                className="author-avatar"
-                                style={{
-                                    width: '60px',
-                                    height: '60px',
-                                    borderRadius: '50%',
-                                    marginRight: '0.75rem' // 👈 pushes caption block close to image
-                                }}
-                            />
-                            <div>
-                                <div className="post-caption-line">
-                                    <strong>{post.author.name}</strong> <span className="caption-only">{post.caption}</span>
-                                </div>
-
-                                <div style={{ fontSize: '0.8rem', color: '#888' }}>
-                                    {new Date(post.createdAt).toLocaleString()}
-                                </div>
+                        <div className="single-post-header">
+                            <div className="single-post-author">
+                                <img
+                                    src={post.author.profilePicture || '/images/default-avatar.png'}
+                                    alt={post.author.name}
+                                    className="single-post-avatar"
+                                />
+                                <span className="single-post-author-name">{post.author.name}</span>
                             </div>
                         </div>
 
-
-                        <hr />
-
-                        {/* Post Actions (moved above comment input) */}
-                        <div className="post-actions-bar" style={{ marginBottom: '1rem' }}>
-                            <i className="far fa-heart"></i>
-                            <i className="far fa-comment"></i>
-                            <i className="far fa-paper-plane"></i>
-                            <i className="far fa-bookmark" style={{ marginLeft: 'auto' }}></i>
-                        </div>
-
-                        {/* Comments */}
-                        <div className="comments-section">
+                        {/* Comments Section */}
+                        <div className="single-post-comments">
                             {post.comments.length > 0 ? (
-                                post.comments.map((comment) => (
-                                    <div key={comment._id} className="comment" style={{ marginBottom: '0.75rem' }}>
-                                        <div>
-                                            <strong>{comment.author.name}</strong> {comment.content}
-                                        </div>
-                                        <div style={{ fontSize: '0.75rem', color: '#999', marginTop: '2px' }}>
-                                            {new Date(comment.createdAt).toLocaleString()}
-                                        </div>
+                                <>
+                                    {/* Show comment count */}
+                                    <div className="comment-count">
+                                        {post.comments.length} comment{post.comments.length !== 1 ? 's' : ''}
                                     </div>
-                                ))
+                                    
+                                    {/* Show all comments */}
+                                    {post.comments.map((comment) => (
+                                        <div key={comment._id} className="single-post-comment">
+                                            <span className="comment-author">{comment.author.name}</span>{' '}
+                                            <span className="comment-content">{comment.content}</span>
+                                        </div>
+                                    ))}
+                                </>
                             ) : (
-                                <p style={{ color: '#888' }}>No comments yet</p>
+                                <p className="no-comments">No comments yet</p>
                             )}
                         </div>
 
-                        {/* Comment Input */}
+                        {/* Post Actions */}
+                        <div className="single-post-actions">
+                            <div className="single-post-action-buttons">
+                                <button className="single-post-action-btn">
+                                    <i className="far fa-heart"></i>
+                                </button>
+                                <button className="single-post-action-btn">
+                                    <i className="far fa-comment"></i>
+                                </button>
+                                <button className="single-post-action-btn">
+                                    <i className="far fa-paper-plane"></i>
+                                </button>
+                            </div>
+                            <button className="single-post-action-btn save-btn">
+                                <i className="far fa-bookmark"></i>
+                            </button>
+                        </div>
+
+                        {/* Likes Count */}
+                        <div className="single-post-likes">
+                            <span className="single-post-likes-count">{post.likeCount} likes</span>
+                        </div>
+
+                        {/* Caption */}
+                        <div className="single-post-caption">
+                            <span className="single-post-caption-author">{post.author.name}</span>{' '}
+                            <span className="single-post-caption-text">{post.caption}</span>
+                        </div>
+
+                        {/* Timestamp */}
+                        <div className="single-post-timestamp">
+                            {new Date(post.createdAt).toLocaleDateString()}
+                        </div>
+
+                        {/* Comment Form */}
                         <form
-                            className="comment-form"
+                            className="single-post-comment-form"
                             action={`/posts/${post._id}/comments?token=${token}`}
                             method="POST"
                         >
@@ -87,12 +93,12 @@ function ShowPost({ post, token }) {
                                 placeholder="Add a comment..."
                                 required
                             />
-                            <button type="submit" className="btn btn-primary">Post</button>
+                            <button type="submit">Post</button>
                         </form>
 
-                        {/* Footer Buttons */}
-                        <div className="post-footer-actions">
-                            <a href={`/authors/profile?token=${token}`} className="btn btn-secondary">
+                        {/* Footer Actions */}
+                        <div className="single-post-footer">
+                            <a href={`/authors/profile?token=${token}`} className="back-btn">
                                 ← Back to Profile
                             </a>
                             <form
@@ -100,7 +106,7 @@ function ShowPost({ post, token }) {
                                 method="POST"
                                 style={{ display: 'inline' }}
                             >
-                                <button type="submit" className="btn btn-danger">Delete</button>
+                                <button type="submit" className="delete-btn">Delete</button>
                             </form>
                         </div>
                     </div>

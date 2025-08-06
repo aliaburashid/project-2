@@ -33,6 +33,14 @@ function Layout(props) {
               <a href={token ? `/posts/new?token=${token}` : '#'}><i className="fas fa-plus-square"></i></a>
               {/* Profile icon (fixed to correct route) */}
               <a href={token ? `/authors/profile?token=${token}` : '#'}><i className="far fa-user-circle"></i></a>
+              {/* Logout button */}
+              {token && (
+                <form action="/authors/logout" method="POST" style={{ margin: 0 }}>
+                  <button type="submit" className="logout-btn">
+                    <i className="fas fa-sign-out-alt"></i>
+                  </button>
+                </form>
+              )}
             </nav>
           </div>
         </header>
@@ -41,6 +49,65 @@ function Layout(props) {
         <main className="app-container" style={{ marginTop: '2rem' }}>
           {props.children}
         </main>
+
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            function toggleComments(buttonElement) {
+              console.log('Toggle function called');
+              const viewMoreBtn = buttonElement;
+              const hiddenComments = buttonElement.parentElement.querySelector('.view-more-comments');
+              
+              console.log('Button:', viewMoreBtn);
+              console.log('Hidden comments:', hiddenComments);
+              
+              if (hiddenComments && viewMoreBtn) {
+                console.log('Elements found, toggling...');
+                if (hiddenComments.style.display === 'none' || hiddenComments.style.display === '') {
+                  hiddenComments.style.display = 'block';
+                  viewMoreBtn.textContent = 'View less';
+                  console.log('Comments expanded');
+                } else {
+                  hiddenComments.style.display = 'none';
+                  const commentCount = hiddenComments.querySelectorAll('.single-post-comment').length + 2;
+                  viewMoreBtn.textContent = 'View all ' + commentCount + ' comments';
+                  console.log('Comments collapsed');
+                }
+              } else {
+                console.log('Elements not found');
+              }
+            }
+            
+            function toggleFeedComments(buttonElement) {
+              console.log('Feed toggle function called');
+              const viewMoreBtn = buttonElement;
+              const hiddenComments = buttonElement.parentElement.querySelector('.view-more-comments');
+              
+              console.log('Button:', viewMoreBtn);
+              console.log('Hidden comments:', hiddenComments);
+              
+              if (hiddenComments && viewMoreBtn) {
+                console.log('Elements found, toggling...');
+                if (hiddenComments.style.display === 'none' || hiddenComments.style.display === '') {
+                  hiddenComments.style.display = 'block';
+                  viewMoreBtn.textContent = 'View less';
+                  console.log('Feed comments expanded');
+                } else {
+                  hiddenComments.style.display = 'none';
+                  const commentCount = hiddenComments.querySelectorAll('.post-caption').length + 2;
+                  viewMoreBtn.textContent = 'View all ' + commentCount + ' comments';
+                  console.log('Feed comments collapsed');
+                }
+              } else {
+                console.log('Elements not found');
+              }
+            }
+            
+            // Make functions globally available
+            window.toggleComments = toggleComments;
+            window.toggleFeedComments = toggleFeedComments;
+            console.log('Comment functionality loaded in Layout');
+          `
+        }} />
       </body>
     </html>
   )
