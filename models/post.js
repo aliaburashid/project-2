@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+require('./comment')
 
 const postSchema = new mongoose.Schema({
 author: {

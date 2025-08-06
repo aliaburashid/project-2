@@ -16,22 +16,27 @@ function Layout(props) {
         />
       </head>
       <body>
-        {/* Navigation Bar */}
+        {/* Top Navigation Bar */}
         <header style={{ borderBottom: '1px solid #dbdbdb', background: 'white' }}>
           <div className="app-container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 0' }}>
+            {/* Logo - goes to home/feed page */}
             <a href={token ? `/posts?token=${token}` : '/'} style={{ textDecoration: 'none', fontSize: '1.5rem', fontWeight: 'bold', color: '#262626' }}>
               FlickGallery
             </a>
 
+            {/* Navigation icons */}
             <nav style={{ display: 'flex', gap: '1.2rem', alignItems: 'center' }}>
+              {/* Home icon */}
               <a href={token ? `/posts?token=${token}` : '/'}><i className="fas fa-home"></i></a>
+              {/* New Post icon */}
               <a href={token ? `/posts/new?token=${token}` : '#'}><i className="fas fa-plus-square"></i></a>
-              <a href={token ? `/profile?token=${token}` : '#'}><i className="far fa-user-circle"></i></a>
+              {/* Profile icon (fixed to correct route) */}
+              <a href={token ? `/authors/profile?token=${token}` : '#'}><i className="far fa-user-circle"></i></a>
             </nav>
           </div>
         </header>
 
-        {/* Page Content */}
+        {/* Main Page Content */}
         <main className="app-container" style={{ marginTop: '2rem' }}>
           {props.children}
         </main>

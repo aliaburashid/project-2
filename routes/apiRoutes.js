@@ -20,20 +20,4 @@ router.get('/posts', authorApiController.auth, postDataController.index, postApi
 
 
 
-// // Get a single post 
-// router.get('/posts/:id', authorApiController.auth, postDataController.index, postApiController.show)
-// // Create new post
-// router.post('/posts', authorApiController.auth, upload.single('image'), processImage, postDataController.create, postApiController.create)
-
-// // Get all posts for logged-in author
-// router.get('/posts', authorApiController.auth, postDataController.index, postApiController.index)
-// // Get one post by ID
-// router.get('/posts/:id', authorApiController.auth, postDataController.show, postApiController.show)
-// // Create a new post
-// router.post('/posts', authorApiController.auth, postDataController.create, postApiController.create)
-// // Update a post and return it
-// router.put('/posts/:id', authorApiController.auth, postDataController.update, postApiController.show)
-// //  Delete a post
-// router.delete('/posts/:id', authorApiController.auth, postDataController.destroy, postApiController.destroy)
-
 module.exports = router

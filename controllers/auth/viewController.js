@@ -14,6 +14,9 @@ apiAuth(req, res, next){
 // Redirect to login page after successful signup
 redirectToLogin(req, res, next){
     res.redirect('/authors/login')
-}
+},
+showProfile(req, res, next) {
+    res.render('posts/Profile', res.locals.data)
+  }
 }
 module.exports = viewController

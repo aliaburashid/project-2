@@ -30,8 +30,12 @@ exports.auth = async (req, res, next) => {
         // 8. Move on to the next middleware or route handler
         next()
     } catch (error) {
-        res.status(401).send('Not authorized')
-    }
+    res.status(401).json({
+        message: 'Not authorized',
+        error: error.message
+    })
+}
+
 }
 
 // Register New Author
@@ -97,4 +101,24 @@ exports.loginAuthor = async (req, res, next) => {
             error: 'Server error. Please try again.'
         });
     }
-};
+}
+
+// Show profile of logged-in user
+exports.showProfile = async (req, res, next) => {
+  try {
+    const profile = await Author.findById(req.author._id)
+      .populate({
+        path: 'posts',
+        options: { sort: { createdAt: -1 } } // newest first
+      });
+
+    if (!profile) {
+      throw new Error('Profile not found');
+    }
+
+    res.locals.data.profile = profile;
+    next();
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+}
