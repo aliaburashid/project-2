@@ -7,14 +7,6 @@ function Feed(props) {
     return (
         <Layout token={token}>
             <div className="app-container">
-                {/* Header */}
-                <div className="feed-header" style={{ padding: '1rem 0' }}>
-                    <h1 style={{ fontWeight: 400 }}>FlickGallery</h1>
-                    <a href={`/posts/new?token=${token}`} className="new-post-btn">
-                        <i className="fas fa-plus"></i> New Post
-                    </a>
-                </div>
-
                 {/* All Posts */}
                 <div className="posts-container">
                     {posts.map((post) => (
