@@ -1,6 +1,7 @@
 // load the models 
 const Post = require('../../models/post') 
 const Author = require('../../models/author')
+const Comment = require('../../models/comment');
 
 // Create an object to store all controller functions
 const dataController = {}
@@ -37,7 +38,7 @@ dataController.index = async (req, res, next) => {
   } catch (error) {
     res.status(400).send({ message: error.message });
   }
-};
+}
 
 // Create a New Post
 dataController.create = async (req, res, next) => {
@@ -59,5 +60,69 @@ dataController.create = async (req, res, next) => {
     res.status(400).send({ message: error.message })
   }
 }
+
+// Handle comments 
+dataController.addComment = async (req, res, next) => {
+try {
+    const { content } = req.body;
+
+    const comment = await Comment.create({
+      author: req.author._id,
+      post: req.params.postId,
+      content: content
+    });
+
+    await Post.findByIdAndUpdate(
+      req.params.postId,
+      { $push: { comments: comment._id } }
+    );
+
+    next();
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
+}
+
+// show a singke post 
+dataController.show = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id)
+      .populate('author')
+      .populate({
+        path: 'comments',
+        populate: { path: 'author' }
+      });
+
+    res.locals.data.post = post;
+    next();
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
+}
+
+// delete a post 
+dataController.deletePost = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.id);
+
+    // Ensure post exists and the logged-in user is the author
+    if (!post || post.author.toString() !== req.author._id.toString()) {
+      return res.status(403).send({ message: 'Not authorized to delete this post' });
+    }
+
+    // Delete the post
+    await Post.findByIdAndDelete(req.params.id);
+
+    // Remove post reference from author's posts array
+    await Author.findByIdAndUpdate(req.author._id, {
+      $pull: { posts: req.params.id }
+    });
+
+    next();
+  } catch (err) {
+    res.status(400).send({ message: err.message });
+  }
+};
+
 
 module.exports = dataController

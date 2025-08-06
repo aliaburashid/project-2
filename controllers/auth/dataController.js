@@ -122,3 +122,32 @@ exports.showProfile = async (req, res, next) => {
     res.status(400).send({ message: error.message });
   }
 }
+
+// Show Edit Profile Form
+exports.editProfileView = async (req, res) => {
+  try {
+    const author = await Author.findById(req.author._id);
+    res.render('auth/EditProfile', { author, token: res.locals.data.token });
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+  }
+};
+
+// Handle profile updates (bio + optional image)
+exports.updateProfile = async (req, res, next) => {
+  try {
+    const updates = {
+      bio: req.body.bio
+    };
+
+    // If new profile picture was uploaded
+    if (req.file) {
+      updates.profilePicture = req.file.path;
+    }
+    
+    await Author.findByIdAndUpdate(req.author._id, updates);
+    next();
+  } catch (error) {
+    res.status(400).send({ message: error.message });
+  }
+};

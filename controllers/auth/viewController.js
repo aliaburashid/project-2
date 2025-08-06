@@ -15,8 +15,16 @@ apiAuth(req, res, next){
 redirectToLogin(req, res, next){
     res.redirect('/authors/login')
 },
-showProfile(req, res, next) {
+showProfile(req, res) {
     res.render('posts/Profile', res.locals.data)
-  }
+  },
+editProfile(req, res, next){
+    res.render('auth/EditProfile', { author: req.author, token: res.locals.data.token });
+},
+  redirectToProfile(req, res) {
+    const token = res.locals.data.token || req.query.token
+    res.redirect(`/authors/profile?token=${token}`);
 }
+}
+
 module.exports = viewController

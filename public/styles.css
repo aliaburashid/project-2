@@ -336,15 +336,13 @@ body {
     margin-right: 0.5rem;
 }
 
-/* Container for the entire profile page */
+/* ---------------------- PROFILE PAGE ---------------------- */
 .profile-container {
   max-width: 800px;
   margin: 2rem auto;
   padding: 0 1rem;
-  font-family: system-ui, sans-serif;
 }
 
-/* Header section: avatar + name + stats */
 .profile-header {
   display: flex;
   align-items: center;
@@ -352,18 +350,12 @@ body {
   gap: 2rem;
 }
 
-/* Circular avatar image */
 .profile-avatar {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #dbdbdb;
-}
-
-/* Name + bio + stats section */
-.profile-info {
-  flex-grow: 1;
 }
 
 .profile-info h2 {
@@ -376,7 +368,6 @@ body {
   color: #555;
 }
 
-/* Post / Follower / Following counts */
 .profile-stats {
   display: flex;
   gap: 1.5rem;
@@ -389,14 +380,12 @@ body {
   color: #000;
 }
 
-/* Grid of posts */
 .profile-posts-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1rem;
 }
 
-/* Each image in the post grid */
 .grid-item img {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -407,4 +396,106 @@ body {
 
 .grid-item img:hover {
   transform: scale(1.02);
+}
+
+/* ---------------------- Comments ---------------------- */
+.comment-drawer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 60%;
+  background: white;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  font-weight: bold;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.comments-list {
+  padding: 1rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.comment {
+  margin-bottom: 1rem;
+}
+
+.comment-form {
+  display: flex;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid #eee;
+}
+
+.comment-form input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-right: 0.5rem;
+}
+
+.comment-form button {
+  background: #0095f6;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+}
+
+.comment {
+  padding: 4px 16px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #333;
+  display: flex;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+.comment strong {
+  font-weight: 600;
+  margin-right: 5px;
+}
+
+.post-comments {
+  padding-top: 4px;
+}
+
+/* reduce the size of the post in the show  */
+.single-post {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+}
+
+.hidden {
+  display: none;
 }
