@@ -23,7 +23,10 @@ router.post('/login', dataController.loginAuthor, postsViewController.redirectHo
 router.get('/login', viewController.signIn)
 
 // edit profile 
-router.put('/profile', dataController.auth, upload.single('profilePicture'), processImage, dataController.updateProfile, viewController.redirectToLogin)
+router.put('/profile', dataController.auth, upload.single('profilePicture'), processImage, dataController.updateProfile, viewController.redirectToProfile)
+
+// Edit profile form page
+router.get('/edit', dataController.auth, dataController.editProfileView);
 
 // Profile Page
 router.get('/profile', dataController.auth, dataController.showProfile, viewController.showProfile)

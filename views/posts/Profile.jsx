@@ -1,6 +1,7 @@
 const React = require('react');
 const Layout = require('../layouts/Layout');
 
+
 function Profile({ profile, token }) {
     return (
         <Layout token={token}>
@@ -15,11 +16,13 @@ function Profile({ profile, token }) {
                             <span><strong>{profile.followers.length}</strong> followers</span>
                             <span><strong>{profile.following.length}</strong> following</span>
                         </div>
-                        <a href={`/authors/edit?token=${token}`} className="btn btn-outline-secondary" style={{ marginTop: '10px' }}>
-                            <i className="fas fa-edit"></i> Edit Profile
-                        </a>
-
                     </div>
+                </div>
+
+                <div className="edit-profile-wrapper">
+                    <a href={`/authors/edit?token=${token}`} className="edit-profile-btn">
+                        Edit Profile
+                    </a>
                 </div>
 
                 <div className="profile-posts-grid">
