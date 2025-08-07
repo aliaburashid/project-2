@@ -16,6 +16,9 @@ function SignIn({ error, success }) {
           rel="stylesheet"
         />
         <link rel="stylesheet" href="/styles.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet" />
       </head>
 
       <body>
@@ -35,7 +38,7 @@ function SignIn({ error, success }) {
 
               <form action="/authors/login" method="POST">
                 <div className="logo text-center mb-3">
-                  <h1>FlickGallery</h1>
+                  <h1 style={{ fontFamily: '"Dancing Script", cursive', fontSize: '2.8rem', fontWeight: '700', color: '#262626' }}>FlickGallery</h1>
                 </div>
 
                 {/* Email */}
